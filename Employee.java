@@ -1,9 +1,13 @@
-package testproj.beans;
+package com.annotation;
+
+import org.springframework.beans.factory.annotation.Value;
 
 public class Employee {
+	@Value("1001")
 	private int id;
+	@Value("Sai")
 	private String name;
-	private Address address;
+	
 	public int getId() {
 		return id;
 	}
@@ -16,18 +20,12 @@ public class Employee {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
 	@Override
 	public String toString() {
-		return String.format("Employee [id=%s, name=%s, address=%s]", id, name, address);
+		return String.format("Employee [id=%s, name=%s]", id, name);
 	}
-
+	
+	
 	
 
 }
