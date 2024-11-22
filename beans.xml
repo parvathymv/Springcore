@@ -8,6 +8,9 @@
   http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+	<context:property-placeholder
+		location="classpath:patient_details.properties" />
+
 	<bean id="obj" class="testproj.Helloworld" scope="prototype">
 
 	</bean>
@@ -45,7 +48,7 @@
 		<constructor-arg name="city" value="Chennai" />
 		<constructor-arg name="zipcode" value="641213" />
 	</bean>
-	
+
 	<!-- setter injection bean reference -->
 
 	<bean id="person1" class="testproj.beans.Person">
@@ -57,51 +60,110 @@
 		<property name="city" value="Bangalore" />
 		<property name="zipcode" value="641213" />
 	</bean>
-	
+
 	<bean id="employee" class="testproj.beans.Employee">
-	<property name="id" value="10001" />
-	<property name="name" value="Sri" />
-	<property name="address" ref="address"/>
-	<!-- <property name="address" ref="address2"/>  exception -->
-	
+		<property name="id" value="10001" />
+		<property name="name" value="Sri" />
+		<property name="address" ref="address" />
+		<!-- <property name="address" ref="address2"/> exception -->
+
 	</bean>
-	
-	<!--  Inner Bean -->
+
+	<!-- Inner Bean -->
 	<bean id="person2" class="testproj.beans.Person">
 		<property name="name" value="Minu" />
-		<property name="address" >
-		<bean id="address2" class="testproj.beans.Address">
-		<property name="city" value="Hyderabad" />
-		<property name="zipcode" value="641213" />
-	</bean>
+		<property name="address">
+			<bean id="address2" class="testproj.beans.Address">
+				<property name="city" value="Hyderabad" />
+				<property name="zipcode" value="641213" />
+			</bean>
 		</property>
-		
+
 	</bean>
-	
-	<!--  Injecting collections -->
+
+	<!-- Injecting collections -->
 	<bean id="shape" class="testproj.beans.ShapeCollection">
-	<property name="shapeOfList">
-	<list>
-	<value>Rectangle</value>
-	<value>Square</value>
-	<value>Circle</value>
-	</list>
-	</property>
-	<property name="shapeOfSet">
-	<set>
-	<value>Rectangle</value>
-	<value>Square</value>
-	<value>Circle</value>
-	</set>
-	</property>
-	<property name="shapeOfMap">
-	<map>
-	<entry key="R" value="Rectangle"/>
-	<entry key="S" value="Square"/>
-	<entry key="C" value="Circle"/>
-	</map>
-	</property>
-	
+		<property name="shapeOfList">
+			<list>
+				<value>Rectangle</value>
+				<value>Square</value>
+				<value>Circle</value>
+			</list>
+		</property>
+		<property name="shapeOfSet">
+			<set>
+				<value>Rectangle</value>
+				<value>Square</value>
+				<value>Circle</value>
+			</set>
+		</property>
+		<property name="shapeOfMap">
+			<map>
+				<entry key="R" value="Rectangle" />
+				<entry key="S" value="Square" />
+				<entry key="C" value="Circle" />
+			</map>
+		</property>
+
+	</bean>
+
+	<bean id="pservice" class="com.service.PatientService">
+		<property name="patient" ref="p"></property>
+	</bean>
+
+	<bean id="p" class="testproj.beans.Patient">
+		<property name="pid" value="${pid}"></property>
+		<property name="pname" value="${pname}"></property>
+		<property name="disease" value="${disease}"></property>
+		<property name="gender" value="${gender}"></property>
+		<property name="admit_status" value="${admit_status}"></property>
+		<property name="age" value="${age}"></property>
+
+	</bean>
+
+	<!-- Interface Injection -->
+	<bean id="square" class="com.interfaces.Square">
+		<property name="side" value="5" />
+	</bean>
+
+	<bean id="rectangle" class="com.interfaces.Rectangle">
+		<property name="length" value="5" />
+		<property name="breadth" value="6" />
+	</bean>
+
+	<bean id="findArea" class="com.interfaces.FindArea">
+		<property name="shape" ref="rectangle" />
+	</bean>
+
+
+
+	<!-- autowiring byName -->
+	<bean id="book" class="com.autowire.Book">
+		<property name="bookName" value="Head first Java" />
+		<property name="bookPrice" value="1000" />
 	</bean>
 	
+	<bean id="book1" class="testproj.beans.Book">
+		<property name="bookName" value="Head first Java" />
+		<property name="bookPrice" value="1000" />
+		<property name="edition"  value="2020"/>
+	</bean>
+	
+	<!-- <bean id="bk" class="com.autowire.Book">
+		<property name="bookName" value="Spring 
+		Design Pattern" />
+		<property name="bookPrice" value="2500" />
+	</bean>
+	
+	<bean id="author" class="com.autowire.Author" autowire="byName">
+		<property name="name" value="Gosling" />
+	</bean> -->
+	
+	
+	<bean id="author1" class="com.autowire.Author" autowire="byType">
+		<property name="name" value="Gosling" />
+	</bean>
+
+
+
 </beans>
